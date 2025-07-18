@@ -1,11 +1,5 @@
-import React from 'react'
+const Loading = () => {
+  return <div>Loading ... </div>;
+};
 
-type Props = {}
-
-const Loading = (props: Props) => {
-  return (
-    <div>Loading ... </div>
-  )
-}
-
-export default Loading
+export default Loading;
