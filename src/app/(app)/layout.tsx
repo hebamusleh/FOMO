@@ -7,8 +7,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Shawqi Stack",
-  description: "Created by @shawqicauses.",
+  title: "FOMO Tech",
+  description: "Fear Of Missing Out Tech - Your source for the latest in tech news and trends.",
 };
 
 const RootLayout = function RootLayout({ children }: PropsWithChildren) {
