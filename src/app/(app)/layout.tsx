@@ -1,3 +1,5 @@
+import QueryProvider from "@/components/common/QueryProvider";
+import LayoutWrapper from "@/components/sections/LayoutWrapper";
 import type { Metadata } from "next";
 import "../../axios.config";
 import "./globals.css";
@@ -14,7 +16,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        <QueryProvider>
+          <LayoutWrapper>{children}</LayoutWrapper>
+        </QueryProvider>
+      </body>
     </html>
   );
 }

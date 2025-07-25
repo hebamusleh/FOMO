@@ -2,8 +2,7 @@ import axios from "axios";
 
 export const getSectionsAPI = async () => {
   try {
-    const res = await axios.get("/sections");
-    console.log("sections response : ", res.data);
+    const res = await axios.get("/api/sections");
     return res.data;
   } catch (e) {
     console.log(e);
@@ -12,7 +11,7 @@ export const getSectionsAPI = async () => {
 
 export const getSectionDetailsAPI = async (sectionId: string) => {
   try {
-    const res = await axios.get(`/sections/${sectionId}`);
+    const res = await axios.get(`/api/sections/${sectionId}`);
     console.log("section details response : ", res.data);
     return res.data;
   } catch (e) {
