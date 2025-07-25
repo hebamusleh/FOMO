@@ -13,7 +13,6 @@ import EyeOffIcon from "@/components/icons/eye-svgrepo-com";
 import CheckIcon from "@/components/icons/check";
 
 export default function LoginForm() {
-  // ensures useRouter works in a Client Component
   const router = useRouter();
 
   // form state
@@ -23,10 +22,8 @@ export default function LoginForm() {
     remember: false,
   });
 
-  // toggle password visibility
   const [showPassword, setShowPassword] = useState(false);
 
-  // loading state
   const [loading, setLoading] = useState(false);
 
   // update form fields
