@@ -19,7 +19,7 @@ import { SavedPosts } from "./collections/SavedPosts";
 import { Sections } from "./collections/Sections";
 import { Students } from "./collections/Students";
 import { Tracks } from "./collections/Tracks";
-import { TrackCategories } from "./collections/TracksCategory";
+import { TracksCategory } from "./collections/TracksCategory";
 import { Users } from "./collections/Users";
 
 const filename = fileURLToPath(import.meta.url);
@@ -39,7 +39,7 @@ export default buildConfig({
     Feedback,
     Sections,
     Tracks,
-    TrackCategories,
+    TracksCategory,
     Articles,
     Posts,
     Notes,

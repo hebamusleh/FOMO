@@ -1,6 +1,6 @@
 import type { CollectionConfig } from "payload";
 
-export const TrackCategories: CollectionConfig = {
+export const TracksCategory: CollectionConfig = {
   slug: 'track-categories',
   admin: {
     useAsTitle: 'categoryName',

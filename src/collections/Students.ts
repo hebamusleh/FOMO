@@ -3,7 +3,7 @@ import type { CollectionConfig } from "payload";
 export const Students: CollectionConfig = {
   slug: 'students',
   admin: {
-    useAsTitle: 'firstName',
+    useAsTitle: 'fullName',
   },
   fields: [
     {
@@ -14,12 +14,7 @@ export const Students: CollectionConfig = {
       unique: true,
     },
     {
-      name: 'firstName',
-      type: 'text',
-      required: true,
-    },
-    {
-      name: 'lastName',
+      name: 'fullName',
       type: 'text',
       required: true,
     },
