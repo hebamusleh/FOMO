@@ -3,6 +3,7 @@
 import { ArrowRight } from "@/components/icons";
 import { Card as UICard } from "@/components/ui/card";
 import { CardType } from "@/models";
+import { IMAGE_URL } from "@/services/api";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -18,7 +19,12 @@ export default function Card({
     <Link href={linkHref} className="m-1 block max-w-sm">
       <UICard className="flex h-full flex-col overflow-hidden rounded-xl border-none bg-white p-2 shadow-sm transition-shadow duration-200 hover:shadow-md">
         <div className="relative h-32 w-full">
-          <Image src={image} alt={title} fill className="object-cover" />
+          <Image
+            src={`${IMAGE_URL}${image}`}
+            alt={title}
+            fill
+            className="object-cover"
+          />
         </div>
         <div className="flex flex-1 flex-col items-center justify-center p-4 text-center">
           <h3 className="mb-1 text-base font-semibold text-gray-900">

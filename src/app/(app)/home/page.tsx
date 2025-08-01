@@ -24,9 +24,9 @@ export default function HomePage() {
                   key={c.id}
                   title={c.name}
                   description={c.description}
-                  image={c.image[0]?.image.thumbnailURL}
+                  image={c.coverImage?.url!}
                   slug={c.id}
-                //   href={`/${c.id}`}
+                  //   href={`/${c.id}`}
                 />
               ))}
         </div>
