@@ -17,23 +17,36 @@ export const Sections: CollectionConfig = {
       type: "textarea",
     },
     {
-      name: "image",
+      name: "coverImage",
+      type: "upload",
+      relationTo: "media",
+    },
+    {
+      name: "cardContent",
       type: "array",
       fields: [
         {
-          name: "image",
-          type: "upload",
-          relationTo: "media",
+          name: "title",
+          type: "text",
+          required: true,
         },
-      ],
-    },
-    {
-      name: "paragraphs",
-      type: "array",
-      fields: [
         {
           name: "paragraph",
           type: "textarea",
+          required: true,
+          minLength: 10,
+          maxLength: 500,
+        },
+        {
+          name: "images",
+          type: "array",
+          fields: [
+            {
+              name: "image",
+              type: "upload",
+              relationTo: "media",
+            },
+          ],
         },
       ],
     },

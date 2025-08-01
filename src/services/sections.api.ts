@@ -12,7 +12,6 @@ export const getSectionsAPI = async () => {
 export const getSectionDetailsAPI = async (sectionId: string) => {
   try {
     const res = await axios.get(`/api/sections/${sectionId}`);
-    console.log("section details response : ", res.data);
     return res.data;
   } catch (e) {
     console.log(e);
