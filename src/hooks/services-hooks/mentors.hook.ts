@@ -9,10 +9,10 @@ export const useGetMentors = () => {
   });
 };
 
-export const useGetMentorDetails = (mentorId: string, enabled = true) => {
+export const useGetMentorDetails = (mentorId: string) => {
   return useQuery({
     queryKey: [QUERIES.MENTORS, mentorId],
     queryFn: () => getMentorDetailsAPI(mentorId),
-    enabled: !!mentorId && enabled,
+    enabled: !!mentorId,
   });
 };

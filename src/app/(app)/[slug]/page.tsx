@@ -4,12 +4,11 @@ import ClientArticle from "./ClientArticle";
 export default async function ArticlePage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: { slug: string };
 }) {
-  const { slug } = await params;
   return (
     <>
-      <ClientArticle slug={slug} />
+      <ClientArticle slug={params.slug} />
     </>
   );
 }

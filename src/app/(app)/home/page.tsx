@@ -25,7 +25,7 @@ export default function HomePage() {
                   description={c.description}
                   image={c.coverImage?.url!}
                   slug={c.id}
-                  href={c.name === "Tracks" ? "/tracks" : `/sections/${c.id}`}
+                  href={c.name === "Tracks" ? "/tracks" : `/${c.id}`}
                 />
               ))}
         </div>
