@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const getPostsAPI = async () => {
   try {
-    const res = await axios.get("/posts");
+    const res = await axios.get("/api/posts");
     console.log("posts response : ", res.data);
     return res.data;
   } catch (e) {
@@ -13,7 +13,7 @@ export const getPostsAPI = async () => {
 
 export const getPostDetailsAPI = async (postId: string) => {
   try {
-    const res = await axios.get(`/posts/${postId}`);
+    const res = await axios.get(`/api/posts/${postId}`);
     console.log("post details response : ", res.data);
     return res.data;
   } catch (e) {
@@ -23,7 +23,7 @@ export const getPostDetailsAPI = async (postId: string) => {
 
 export const createPostAPI = async (body: ICreatePost) => {
   try {
-    const res = await axios.post("/posts", body);
+    const res = await axios.post("/api/posts", body);
     console.log("create post response : ", res.data);
     return res.data;
   } catch (e) {
@@ -33,7 +33,7 @@ export const createPostAPI = async (body: ICreatePost) => {
 
 export const updatePostAPI = async (postId: string, body: ICreatePost) => {
   try {
-    const res = await axios.put(`/posts/${postId}`, body);
+    const res = await axios.put(`/api/posts/${postId}`, body);
     console.log("update post response : ", res.data);
     return res.data;
   } catch (e) {
@@ -43,7 +43,7 @@ export const updatePostAPI = async (postId: string, body: ICreatePost) => {
 
 export const deletePostAPI = async (postId: string) => {
   try {
-    const res = await axios.delete(`/posts/${postId}`);
+    const res = await axios.delete(`/api/posts/${postId}`);
     console.log("delete post response : ", res.data);
     return res.data;
   } catch (e) {
@@ -53,7 +53,7 @@ export const deletePostAPI = async (postId: string) => {
 
 export const getSavedPostsAPI = async (studentId: string) => {
   try {
-    const res = await axios.get(`/saved-posts/${studentId}`);
+    const res = await axios.get(`/api/saved-posts/${studentId}`);
     console.log("saved posts response : ", res.data);
     return res.data;
   } catch (e) {
