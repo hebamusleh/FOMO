@@ -8,7 +8,6 @@ import { ISection } from "@/models";
 
 export default function HomePage() {
   const { data, isLoading } = useGetSections();
-  console.log(data?.docs);
   return (
     <>
       <Hero />
@@ -26,7 +25,7 @@ export default function HomePage() {
                   description={c.description}
                   image={c.coverImage?.url!}
                   slug={c.id}
-                  //   href={`/${c.id}`}
+                  href={c.name === "Tracks" ? "/tracks" : `/sections/${c.id}`}
                 />
               ))}
         </div>
