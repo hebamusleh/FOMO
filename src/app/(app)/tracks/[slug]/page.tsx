@@ -12,8 +12,6 @@ export default function TrackDetailPage({
   const { slug } = params;
   const { data: track, isLoading } = useGetTrackDetails(slug);
 
-  console.log("Track details data:", track);
-
   if (isLoading) return <div>Loading...</div>;
 
   return (
