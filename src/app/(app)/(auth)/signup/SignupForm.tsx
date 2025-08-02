@@ -16,6 +16,7 @@ import EyeOffIcon from "@/components/icons/eye-svgrepo-com";
 import UserIcon from "@/components/icons/frame";
 import LockIcon from "@/components/icons/lock";
 import MailIcon from "@/components/icons/sms";
+import { SignUpAPI } from "@/services/auth.api";
 import Link from "next/link";
 
 const stepOneSchema = yup.object({
@@ -122,12 +123,33 @@ export default function SignupForm() {
         }
       });
 
-      await axios.post("/api/signup", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
+      const result = await SignUpAPI({
+        firstName: data.firstName,
+        lastName: data.lastName,
+        role: data.role,
+        email: data.email,
+        password: data.password,
+        confirmPassword: data.confirmPassword,
+        dateOfBirth: `${data.dob.yyyy}-${data.dob.mm}-${data.dob.dd}`,
+        pronoun: data.pronoun,
+        major: data.major,
+        avatar: data.photo!,
+        goals: data.goals,
+        bio: data.bio,
+        linkedin: data.linkedin!,
+        // job: data.job!,
+        // track: data.track!,
+        // skills: data.skills!,
+        // message: data.message!,
+        // yearOfExperience: data.yearOfExperience ? data.yearOfExperience : undefined,
       });
 
-      toast.success("Signed up successfully");
-      router.replace("/home");
+      if (result.success) {
+        toast.success("Signed up successfully");
+        router.replace("/home");
+      } else {
+        toast.error(result.message || "Signup failed");
+      }
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         const axiosError = error as AxiosError<{ message?: string }>;

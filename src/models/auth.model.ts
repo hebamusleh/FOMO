@@ -3,15 +3,16 @@ export interface ILoginBody {
   password: string;
 }
 export interface ISignUpBody {
-  fullName: string;
-  role: "Student" | "Mentor";
+  lastName: string;
+  firstName: string;
+  role: string;
   email: string;
   password: string;
   confirmPassword: string;
   dateOfBirth: string;
   pronoun: string;
   major?: string;
-  avatar: File;
+  avatar: File | null;
   goals?: string;
   bio: string;
   linkedin?: string;

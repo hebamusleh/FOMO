@@ -1,3 +1,5 @@
+"use server";
+
 import { ISignUpBody, ISignUpResponse } from "@/models";
 import config from "@/payload.config";
 import { cookies } from "next/headers";
@@ -21,7 +23,8 @@ export const SignUpAPI = async (
     await payload.create({
       collection: "users",
       data: {
-        fullName: body.fullName,
+        firstName: body.firstName,
+        lastName: body.lastName,
         role: body.role,
         email: body.email,
         password: body.password,
@@ -60,15 +63,17 @@ export const SignUpAPI = async (
         message: "User creation successful",
       };
     } else {
+      console.error("Signup error:", result);
       return {
         success: false,
         message: "User creation failed",
       };
     }
   } catch (e) {
+    console.error("Signup error:", e);
     return {
       success: false,
-      message: "User creation failed",
+      message: e instanceof Error ? e.message : "User creation failed",
     };
   }
 };

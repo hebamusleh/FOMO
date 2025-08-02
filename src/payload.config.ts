@@ -49,5 +49,7 @@ export default buildConfig({
     SavedArticles,
   ],
   sharp,
-  plugins: [],
+  plugins: [
+    
+  ],
 });
