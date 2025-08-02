@@ -14,12 +14,16 @@ FOMO Techno is a platform designed to guide Arab students in Software Engineerin
    pnpm install
    pnpm run dev
    ```
-   2. open Admin Panel
+2. open Admin Panel
    ```bash
       http://localhost:3000/admin
    ```
 
-   3. open project
+3. open project
    ```bash
    http://localhost:3000/
    ```
+
+## Figma
+[https://www.figma.com/design/wSHkHxzXcFh9L9uRad08dN/FOMO-Tech?node-id=0-1&p=f&t=59xVQuiddTscrX6o-0](FOMO_FIGMA)
+
