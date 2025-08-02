@@ -12,7 +12,13 @@ interface Props {
 
 const LayoutClient = ({ children }: Props) => {
   const path = usePathname();
-  const hideOn = ["/", "/login", "/signup/student", "/signup/mentor"];
+  const hideOn = [
+    "/",
+    "/login",
+    "/signup",
+    "/signup/student",
+    "/signup/mentor",
+  ];
   const isHidden = hideOn.includes(path);
 
   return (

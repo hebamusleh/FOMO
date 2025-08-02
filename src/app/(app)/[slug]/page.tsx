@@ -1,14 +1,6 @@
-// src/app/[slug]/page.tsx
 import ClientArticle from "./ClientArticle";
 
-export default async function ArticlePage({
-  params,
-}: {
-  params: { slug: string };
-}) {
-  return (
-    <>
-      <ClientArticle slug={params.slug} />
-    </>
-  );
+export default async function ArticlePage({ params }: { params: { slug: string } }) {
+  const { slug } = params as { slug: string }; 
+  return <ClientArticle slug={slug} />;
 }

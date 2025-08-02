@@ -50,13 +50,3 @@ export const deletePostAPI = async (postId: string) => {
     console.log(e);
   }
 };
-
-export const getSavedPostsAPI = async (studentId: string) => {
-  try {
-    const res = await axios.get(`/api/saved-posts/${studentId}`);
-    console.log("saved posts response : ", res.data);
-    return res.data;
-  } catch (e) {
-    console.log(e);
-  }
-};

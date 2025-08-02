@@ -1,5 +1,6 @@
 import { QUERIES } from "@/enum";
 import { getSectionDetailsAPI, getSectionsAPI } from "@/services";
+
 import { useQuery } from "@tanstack/react-query";
 
 export const useGetSections = () => {
