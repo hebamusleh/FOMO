@@ -1,139 +1,114 @@
 "use client";
 
-import { useState, FormEvent, ChangeEvent } from "react";
-import { useRouter } from "next/navigation";
-import axios from "axios";
-import { toast } from "react-toastify";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import * as yup from "yup";
 
-import EmailIcon from "@/components/icons/sms";
-import LockIcon from "@/components/icons/lock";
+import CheckIcon from "@/components/icons/check";
 import EyeIcon from "@/components/icons/eye-slash";
 import EyeOffIcon from "@/components/icons/eye-svgrepo-com";
-import CheckIcon from "@/components/icons/check";
+import LockIcon from "@/components/icons/lock";
+import EmailIcon from "@/components/icons/sms";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm, useWatch } from "react-hook-form";
 
 export default function LoginForm() {
   const router = useRouter();
-
-  // form state
-  const [form, setForm] = useState({
-    email: "",
-    password: "",
-    remember: false,
+  const schema = yup.object({
+    email: yup
+      .string()
+      .email("Please enter a valid email")
+      .required("Email is required"),
+    password: yup
+      .string()
+      .min(6, "Password must be at least 6 characters")
+      .required("Password is required"),
+    remember: yup.boolean(),
   });
+  type LoginFormData = yup.InferType<typeof schema>;
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    control,
+  } = useForm<LoginFormData>({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      email: "",
+      password: "",
+      remember: false,
+    },
+  });
+  const rememberValue = useWatch({ control, name: "remember" });
 
   const [showPassword, setShowPassword] = useState(false);
 
   const [loading, setLoading] = useState(false);
 
-  // update form fields
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, checked } = e.target;
-    setForm((prev) => ({
-      ...prev,
-      [name]: type === "checkbox" ? checked : value,
-    }));
-  };
-
-  // on login button click
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const { email, password, remember } = form;
-
-    // validate fields
-    if (!email.trim()) {
-      toast.error("Email is required");
-      return;
-    }
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      toast.error("Please enter a valid email");
-      return;
-    }
-    if (!password) {
-      toast.error("Password is required");
-      return;
-    }
-    if (password.length < 6) {
-      toast.error("Password must be at least 6 characters");
-      return;
-    }
-
-    setLoading(true);
-
-    try {
-      // API request for login
-      await axios.post("/api/login", { email, password, remember });
-      toast.success("Logged in successfully");
-
-      // navigate to Home page
-      router.push("/home"); // or "/" depending on actual route
-    } catch (err) {
-      console.error(err);
-      toast.error("Login failed. Please check your credentials");
-    } finally {
-      setLoading(false);
-    }
+  const onSubmit = async (data: LoginFormData) => {
+    console.log(data);
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      {/* email field */}
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <div className="relative">
-        <EmailIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+        <EmailIcon className="absolute left-3 top-1/2 -translate-y-1/2 transform text-gray-400" />
         <input
-          name="email"
           type="email"
           placeholder="you@example.com"
-          value={form.email}
-          onChange={handleChange}
-          className="w-full pl-10 pr-4 py-3 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          {...register("email")}
+          className={`w-full rounded-lg bg-gray-100 py-3 pl-10 pr-4 focus:outline-none focus:ring-2 ${
+            errors.email ? "!border-red-500" : "focus:ring-blue-500"
+          }`}
         />
       </div>
+      {errors.email && (
+        <p className="text-sm font-semibold text-red-500">
+          {errors.email.message}
+        </p>
+      )}
 
-      {/* password field */}
       <div className="relative">
-        <LockIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+        <LockIcon className="absolute left-3 top-1/2 -translate-y-1/2 transform text-gray-400" />
         <input
-          name="password"
           type={showPassword ? "text" : "password"}
           placeholder="Password"
-          value={form.password}
-          onChange={handleChange}
-          className="w-full pl-10 pr-10 py-3 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          {...register("password")}
+          className={`w-full rounded-lg bg-gray-100 py-3 pl-10 pr-10 focus:outline-none focus:ring-2 ${
+            errors.password ? "!border-red-500" : "focus:ring-blue-500"
+          }`}
         />
         <button
           type="button"
           onClick={() => setShowPassword((s) => !s)}
-          className="absolute top-1/2 right-3 transform -translate-y-1/2"
-        >
+          className="absolute right-3 top-1/2 -translate-y-1/2 transform">
           {showPassword ? <EyeOffIcon /> : <EyeIcon />}
         </button>
       </div>
+      {errors.password && (
+        <p className="text-sm font-semibold text-red-500">
+          {errors.password.message}
+        </p>
+      )}
 
-      {/* remember me option and forgot password link */}
       <div className="flex items-center justify-between">
-        <label className="flex items-center space-x-2">
+        <label className="flex cursor-pointer items-center space-x-2">
           <input
-            name="remember"
             type="checkbox"
-            checked={form.remember}
-            onChange={handleChange}
+            {...register("remember")}
             className="sr-only"
           />
           <div
-            className={`w-5 h-5 rounded flex items-center justify-center ${
-              form.remember ? "border-0" : "border border-gray-300"
-            }`}
-          >
-            {form.remember && (
-              <CheckIcon className="w-5 h-5 text-blue-600" fill="currentColor" />
-            )}
+            className={`flex h-5 w-5 items-center justify-center rounded-full border ${
+              rememberValue ? "" : "border-gray-300"
+            }`}>
+            {rememberValue && <CheckIcon className="h-4 w-4 text-white" />}
           </div>
           <span className="text-gray-700">Remember me?</span>
         </label>
-        <Link href="/forgot" className="text-blue-600 hover:underline text-sm">
+
+        <Link href="/forgot" className="text-sm text-blue-600 hover:underline">
           Forgot?
         </Link>
       </div>
@@ -142,8 +117,7 @@ export default function LoginForm() {
       <button
         type="submit"
         disabled={loading}
-        className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 transition"
-      >
+        className="w-full rounded-lg bg-blue-600 py-3 text-white transition hover:bg-blue-700 disabled:opacity-50">
         {loading ? "Loading…" : "Login"}
       </button>
     </form>
