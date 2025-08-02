@@ -23,7 +23,18 @@ export interface ISignUpBody {
 }
 
 export interface IContactBody {
+  fullName: string;
+  email: string;
+  message: string;
+}
+
+export interface ISignUpResponse {
+  success: boolean;
+  message: string;
+  user?: {
+    id: string;
     fullName: string;
     email: string;
-    message: string;
+    role: "Student" | "Mentor";
+  };
 }
