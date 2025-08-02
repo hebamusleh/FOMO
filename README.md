@@ -25,5 +25,5 @@ FOMO Techno is a platform designed to guide Arab students in Software Engineerin
    ```
 
 ## Figma
-[https://www.figma.com/design/wSHkHxzXcFh9L9uRad08dN/FOMO-Tech?node-id=0-1&p=f&t=59xVQuiddTscrX6o-0](FOMO_FIGMA)
+[FOMO FIGMA](https://www.figma.com/design/wSHkHxzXcFh9L9uRad08dN/FOMO-Tech?node-id=0-1&p=f&t=59xVQuiddTscrX6o-0)
 
