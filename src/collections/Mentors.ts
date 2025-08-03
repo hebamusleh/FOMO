@@ -35,24 +35,13 @@ export const Mentors: CollectionConfig = {
     },
     {
       name: "major",
-      type: "select",
+      type: "text",
       required: true,
-      options: [
-        { label: "Software Engineering", value: "Software_Engineering" },
-        { label: "Information Technology", value: "Information_Technology" },
-        { label: "Computer Science", value: "Computer_Science" },
-        { label: "Computer Engineering", value: "Computer_Engineering" },
-        { label: "Other", value: "other" },
-      ],
     },
     {
       name: "pronoun",
-      type: "select",
+      type: "text",
       required: true,
-      options: [
-        { label: "She/Her", value: "she_her" },
-        { label: "He/His", value: "he_his" },
-      ],
     },
     {
       name: "yearOfExpe",

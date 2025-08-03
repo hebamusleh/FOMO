@@ -1,8 +1,6 @@
 "use server";
 
-import { ISignUpBody, ISignUpResponse } from "@/models";
 import config from "@/payload.config";
-import { cookies } from "next/headers";
 import { getPayload, User } from "payload";
 
 type Result = {
@@ -10,67 +8,82 @@ type Result = {
   token?: string;
   user?: User;
 };
-// export const loginAPI = async (body: ILoginBody) => {
-//   try {
-//   } catch (e) {}
-// };
 
-export const SignUpAPI = async (
-  body: ISignUpBody,
-): Promise<ISignUpResponse> => {
+export const SignUpAPI = async (body: any) => {
   const payload = await getPayload({ config });
   try {
-    await payload.create({
+    const user = await payload.create({
       collection: "users",
       data: {
+        email: body.email,
+        password: body.password,
         firstName: body.firstName,
         lastName: body.lastName,
         role: body.role,
-        email: body.email,
-        password: body.password,
-        confirmPassword: body.confirmPassword,
-        dateOfBirth: body.dateOfBirth,
-        pronoun: body.pronoun,
-        major: body.major,
-        avatar: body.avatar,
-        goals: body.goals,
-        bio: body.bio,
-        linkedin: body.linkedin,
-        job: body.job,
-        track: body.track,
-        skills: body.skills,
-        message: body.message,
-        yearOfExperience: body.yearOfExperience,
+        profilePhoto: body.avatar,
       },
     });
-    const result: Result = await payload.login({
+
+    if (body.role === "student") {
+      await payload.create({
+        collection: "students",
+        data: {
+          userId: user.id,
+          firstName: body.firstName,
+          lastName: body.lastName,
+          goal: body.goals,
+          bio: body.bio,
+          birthday: body.dateOfBirth,
+          major: body.major,
+          pronoun: body.pronoun,
+          profilePhoto: body.avatar,
+          urlLinkedin: body.linkedin,
+          isAgree: body.termsAccepted,
+        },
+      });
+    } else if (body.role === "mentor") {
+      await payload.create({
+        collection: "mentors",
+        data: {
+          userId: user.id,
+          firstName: body.firstName,
+          lastName: body.lastName,
+          bio: body.bio,
+          birthday: body.dateOfBirth,
+          major: body.major,
+          pronoun: body.pronoun,
+          yearOfExpe: body.yearOfExperience,
+          skills: body.skills,
+          profilPhoto: body.avatar,
+          urlLinkedin: body.linkedin,
+          welcomeStatement: body.welcome,
+          isAgree: body.termsAccepted,
+          expertTrackId: body.track,
+        },
+      });
+    }
+
+    const result = await payload.login({
       collection: "users",
       data: {
         email: body.email,
         password: body.password,
       },
     });
+
     if (result.token) {
-      let cookieStore = await cookies();
-      cookieStore.set({
-        name: "token",
-        value: result.token,
-        httpOnly: true,
-        path: "/home",
-      });
       return {
         success: true,
         message: "User creation successful",
-      };
-    } else {
-      console.error("Signup error:", result);
-      return {
-        success: false,
-        message: "User creation failed",
+        token: result.token,
       };
     }
+
+    return {
+      success: false,
+      message: "User creation failed during login",
+    };
   } catch (e) {
-    console.error("Signup error:", e);
     return {
       success: false,
       message: e instanceof Error ? e.message : "User creation failed",

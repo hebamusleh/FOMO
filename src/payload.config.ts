@@ -25,6 +25,9 @@ import { Users } from "./collections/Users";
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
+console.log('DB URI:', process.env.DATABASE_URI);
+console.log('DB URI:',"mongodb+srv://hebamesluh:jkDPwgjXmn9DCYph@fomo-db.2bz7vly.mongodb.net/");
+
 export default buildConfig({
   secret: process.env.PAYLOAD_SECRET || "",
   db: mongooseAdapter({ url: process.env.DATABASE_URI || "" }),
