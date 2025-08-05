@@ -5,6 +5,18 @@ export const Articles: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
   },
+       access : {
+    create:({ req: { user } }:AccessArgs) => {
+      return user?.role === 'admin' || user?.role === 'mentor'
+    },
+    read : ()=>true, // Allow all users to read tracks
+    update :({ req: { user } }: AccessArgs) => {
+      return user?.role === 'admin' || user?.role === 'mentor';
+    },
+    delete : ({ req: { user } }: AccessArgs) => {
+      return user?.role === 'admin' || user?.role === 'mentor';
+    },
+  },
   fields: [
     {
       name: 'mentorId',

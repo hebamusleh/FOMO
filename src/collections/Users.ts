@@ -29,8 +29,21 @@ export const Users: CollectionConfig = {
     },
     {
       name: "role",
-      type: "text",
-      required: true,
+      type: "select",
+      options :[
+        {
+          label: "Admin",
+          value: "admin",
+        },
+        {
+          label: "Student",
+          value: "student",
+        },
+         {
+          label: "Mentor",
+          value: "mentor",
+        },
+      ]
     },
   ],
 };

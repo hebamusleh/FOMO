@@ -5,6 +5,18 @@ export const Tracks: CollectionConfig = {
   admin: {
     useAsTitle: 'trackName',
   },
+  access : {
+    create:({ req: { user } }:AccessArgs) => {
+      return user?.role === 'admin' || user?.role === 'mentor'
+    },
+    read : ()=>true, // Allow all users to read tracks
+    update :({ req: { user } }: AccessArgs) => {
+      return user?.role === 'admin';
+    },
+    delete : ({ req: { user } }: AccessArgs) => {
+      return user?.role === 'admin';
+    },
+  },
   fields: [
     {
       name: 'trackName',

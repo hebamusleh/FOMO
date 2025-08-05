@@ -6,6 +6,18 @@ export const Feedback: CollectionConfig = {
   admin: {
     useAsTitle: 'id',
   },
+       access : {
+    create:({ req: { user } }:AccessArgs) => {
+      return user?.role === 'admin' || user?.role === 'mentor' || user?.role === 'student';
+    },
+    read : ()=>true, // Allow all users to read tracks
+    update :({ req: { user } }: AccessArgs) => {
+      return user?.role === 'admin' || user?.role === 'mentor' || user?.role === 'student';
+    },
+    delete : ({ req: { user } }: AccessArgs) => {
+      return user?.role === 'admin' || user?.role === 'mentor' || user?.role === 'student';
+    },
+  },
   fields: [
     {
       name: 'idUser',
