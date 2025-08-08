@@ -5,6 +5,16 @@ export const Mentors: CollectionConfig = {
   admin: {
     useAsTitle: "userId",
   },
+  access: {
+    create: ({ req: { user } }) => !!user && user.role === "mentor",
+    read: () => true,
+    update: ({ req: { user } }) => {
+      if (!user) return false;
+      if (user.role === "admin") return true;
+      return { userId: { equals: user.id } };
+    },
+    delete: ({ req: { user } }) => user?.role === "admin",
+  },
   fields: [
     {
       name: "userId",
@@ -12,16 +22,7 @@ export const Mentors: CollectionConfig = {
       relationTo: "users",
       required: true,
       unique: true,
-    },
-    {
-      name: "firstName",
-      type: "text",
-      required: true,
-    },
-    {
-      name: "lastName",
-      type: "text",
-      required: true,
+      filterOptions: { role: { equals: "mentor" } },
     },
     {
       name: "bio",
@@ -53,7 +54,7 @@ export const Mentors: CollectionConfig = {
       type: "textarea",
     },
     {
-      name: "profilPhoto",
+      name: "profilePhoto",
       type: "upload",
       relationTo: "media",
     },
