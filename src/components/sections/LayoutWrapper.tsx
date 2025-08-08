@@ -35,5 +35,11 @@ export default function LayoutWrapper({
 }: {
   children: React.ReactNode;
 }) {
+  const fetchUser = useAuthStore((state) => state.fetchUser);
+
+  useEffect(() => {
+    fetchUser();
+  }, [fetchUser]);
+  
   return <LayoutClient>{children}</LayoutClient>;
 }

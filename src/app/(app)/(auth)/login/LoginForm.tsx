@@ -12,6 +12,8 @@ import LockIcon from "@/components/icons/lock";
 import EmailIcon from "@/components/icons/sms";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, useWatch } from "react-hook-form";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -46,10 +48,34 @@ export default function LoginForm() {
 
   const [loading, setLoading] = useState(false);
 
-  const onSubmit = async (data: LoginFormData) => {
-    console.log(data);
-  };
+const onSubmit = async (data: LoginFormData) => {
+    setLoading(true);
+    try {
+      const response = await axios.post('/api/users/login', {
+        email: data.email,
+        password: data.password,
+      });
 
+      const { token } = response.data;
+
+      // Store JWT token
+      if (data.remember) {
+        document.cookie = `token=${token}; path=/; max-age=${60 * 60 * 24 * 30}`; // 30 days
+      } else {
+        sessionStorage.setItem('token', token);
+      }
+
+      // Fetch user data
+      await setUser();
+
+      toast.success('Logged in successfully');
+      router.push('/home');
+    } catch (error) {
+      toast.error('Login failed: Invalid credentials');
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <div className="relative">

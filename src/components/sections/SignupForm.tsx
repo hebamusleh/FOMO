@@ -79,82 +79,57 @@ export default function SignupForm({ initialRole, onSwitchRole }: Props) {
     if (valid) setStep((step + 1) as 1 | 2 | 3);
   };
 
-  const onSubmit = async (data: any) => {
-    setLoading(true);
-    console.log(data);
+const onSubmit = async (data: any) => {
+  setLoading(true);
+  try {
+    let avatarId: string | null = null;
 
-    try {
-      let avatarId: string | null = null;
-
-      if (data.photo instanceof File) {
-        const formData = new FormData();
-        formData.append("file", data.photo);
-        formData.append("alt", `${data.firstName} ${data.lastName}`);
-
-        const uploadRes = await uploadMedia(formData);
-        avatarId = uploadRes?.doc?.id;
-      }
-      const body = {
-        firstName: data.firstName,
-        lastName: data.lastName,
-        role: data.role,
-        email: data.email,
-        password: data.password,
-        confirmPassword: data.confirmPassword,
-        dateOfBirth: `${data.dob.yyyy}-${data.dob.mm}-${data.dob.dd}`,
-        pronoun: data.pronoun,
-        major: data.major,
-        avatar: avatarId,
-        goals: data.goals,
-        bio: data.bio,
-        linkedin: data.linkedin,
-        track: data.track,
-        skills: data.skills,
-        message: data.message,
-        yearOfExperience: data.yearOfExperience,
-      };
-
-      console.log("body : ", body);
-
-      const result = await SignUpAPI({
-        firstName: data.firstName,
-        lastName: data.lastName,
-        role: data.role,
-        email: data.email,
-        password: data.password,
-        confirmPassword: data.confirmPassword,
-        dateOfBirth: `${data.dob.yyyy}-${data.dob.mm}-${data.dob.dd}`,
-        pronoun: data.pronoun,
-        major: data.major,
-        avatar: avatarId,
-        goals: data.goals,
-        bio: data.bio,
-        linkedin: data.linkedin,
-        track: data.track,
-        skills: data.skills,
-        message: data.message,
-        yearOfExperience: data.yearOfExperience,
-      });
-
-      if (result.success) {
-        toast.success("Signed up successfully");
-        router.replace("/home");
-      } else {
-        toast.error(result.message || "Signup failed");
-        console.log(result.message);
-      }
-    } catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
-        const axiosError = error as AxiosError<{ message?: string }>;
-        toast.error(axiosError.response?.data?.message || "Signup failed");
-      } else {
-        toast.error("Signup failed");
-      }
-    } finally {
-      setLoading(false);
+    if (data.photo instanceof File) {
+      const formData = new FormData();
+      formData.append('file', data.photo);
+      formData.append('alt', `${data.firstName} ${data.lastName}`);
+      const uploadRes = await uploadMedia(formData);
+      avatarId = uploadRes?.doc?.id;
     }
-  };
 
+    const body = {
+      firstName: data.firstName,
+      lastName: data.lastName,
+      role: data.role,
+      email: data.email,
+      password: data.password,
+      confirmPassword: data.confirmPassword,
+      dateOfBirth: `${data.dob.yyyy}-${data.dob.mm}-${data.dob.dd}`,
+      pronoun: data.pronoun,
+      major: data.major,
+      avatar: avatarId,
+      goals: data.goals,
+      bio: data.bio,
+      linkedin: data.linkedin,
+      track: data.tracks,
+      skills: data.skills,
+      message: data.welcome,
+      yearOfExperience: data.experience,
+    };
+
+    const result = await SignUpAPI(body);
+
+    if (result.success) {
+      // Store JWT token
+      document.cookie = `token=${result.token}; path=/; max-age=${60 * 60 * 24 * 30}`;
+      // Fetch user data
+      await useAuthStore.getState().fetchUser();
+      toast.success('Signed up successfully');
+      router.replace('/home');
+    } else {
+      toast.error(result.message || 'Signup failed');
+    }
+  } catch (error) {
+    toast.error(error.message || 'Signup failed');
+  } finally {
+    setLoading(false);
+  }
+};
   return (
     <FormProvider {...methods}>
       <div className="flex min-h-screen flex-col md:flex-row">

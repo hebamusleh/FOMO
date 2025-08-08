@@ -1,6 +1,7 @@
 "use server";
 
 import config from "@/payload.config";
+import axios from "axios";
 import { getPayload, User } from "payload";
 
 type Result = {
@@ -9,87 +10,87 @@ type Result = {
   user?: User;
 };
 
-export const SignUpAPI = async (body: any) => {
-  const payload = await getPayload({ config });
-  try {
-    const user = await payload.create({
-      collection: "users",
-      data: {
-        email: body.email,
-        password: body.password,
-        firstName: body.firstName,
-        lastName: body.lastName,
-        role: body.role,
-        profilePhoto: body.avatar,
-      },
-    });
+// export const SignUpAPI = async (body: any) => {
+//   const payload = await getPayload({ config });
+//   try {
+//     const user = await payload.create({
+//       collection: "users",
+//       data: {
+//         email: body.email,
+//         password: body.password,
+//         firstName: body.firstName,
+//         lastName: body.lastName,
+//         role: body.role,
+//         profilePhoto: body.avatar,
+//       },
+//     });
 
-    if (body.role === "student") {
-      await payload.create({
-        collection: "students",
-        data: {
-          userId: user.id,
-          firstName: body.firstName,
-          lastName: body.lastName,
-          goal: body.goals,
-          bio: body.bio,
-          birthday: body.dateOfBirth,
-          major: body.major,
-          pronoun: body.pronoun,
-          profilePhoto: body.avatar,
-          urlLinkedin: body.linkedin,
-          isAgree: body.termsAccepted,
-        },
-      });
-    } else if (body.role === "mentor") {
-      await payload.create({
-        collection: "mentors",
-        data: {
-          userId: user.id,
-          firstName: body.firstName,
-          lastName: body.lastName,
-          bio: body.bio,
-          birthday: body.dateOfBirth,
-          major: body.major,
-          pronoun: body.pronoun,
-          yearOfExpe: body.yearOfExperience,
-          skills: body.skills,
-          profilPhoto: body.avatar,
-          urlLinkedin: body.linkedin,
-          welcomeStatement: body.welcome,
-          isAgree: body.termsAccepted,
-          expertTrackId: body.track,
-        },
-      });
-    }
+//     if (body.role === "student") {
+//       await payload.create({
+//         collection: "students",
+//         data: {
+//           userId: user.id,
+//           firstName: body.firstName,
+//           lastName: body.lastName,
+//           goal: body.goals,
+//           bio: body.bio,
+//           birthday: body.dateOfBirth,
+//           major: body.major,
+//           pronoun: body.pronoun,
+//           profilePhoto: body.avatar,
+//           urlLinkedin: body.linkedin,
+//           isAgree: body.termsAccepted,
+//         },
+//       });
+//     } else if (body.role === "mentor") {
+//       await payload.create({
+//         collection: "mentors",
+//         data: {
+//           userId: user.id,
+//           firstName: body.firstName,
+//           lastName: body.lastName,
+//           bio: body.bio,
+//           birthday: body.dateOfBirth,
+//           major: body.major,
+//           pronoun: body.pronoun,
+//           yearOfExpe: body.yearOfExperience,
+//           skills: body.skills,
+//           profilPhoto: body.avatar,
+//           urlLinkedin: body.linkedin,
+//           welcomeStatement: body.welcome,
+//           isAgree: body.termsAccepted,
+//           expertTrackId: body.track,
+//         },
+//       });
+//     }
 
-    const result = await payload.login({
-      collection: "users",
-      data: {
-        email: body.email,
-        password: body.password,
-      },
-    });
+//     const result = await payload.login({
+//       collection: "users",
+//       data: {
+//         email: body.email,
+//         password: body.password,
+//       },
+//     });
 
-    if (result.token) {
-      return {
-        success: true,
-        message: "User creation successful",
-        token: result.token,
-      };
-    }
+//     if (result.token) {
+//       return {
+//         success: true,
+//         message: "User creation successful",
+//         token: result.token,
+//       };
+//     }
 
-    return {
-      success: false,
-      message: "User creation failed during login",
-    };
-  } catch (e) {
-    return {
-      success: false,
-      message: e instanceof Error ? e.message : "User creation failed",
-    };
-  }
-};
+//     return {
+//       success: false,
+//       message: "User creation failed during login",
+//     };
+//   } catch (e) {
+//     return {
+//       success: false,
+//       message: e instanceof Error ? e.message : "User creation failed",
+//     };
+//   }
+// };
 
 // export const logoutAPI = async () => {
 //   try {
@@ -98,3 +99,32 @@ export const SignUpAPI = async (body: any) => {
 //     // Handle error
 //   }
 // };
+
+
+
+export const SignUpAPI = async (data: {
+  firstName: string;
+  lastName: string;
+  role: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  dateOfBirth: string;
+  pronoun: string;
+  major: string;
+  avatar?: string;
+  goals?: string;
+  bio?: string;
+  linkedin?: string;
+  track?: string;
+  skills?: string;
+  message?: string;
+  yearOfExperience?: string;
+}) => {
+  try {
+    const response = await axios.post('/api/users/signup', data);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.message || 'Signup failed');
+  }
+};

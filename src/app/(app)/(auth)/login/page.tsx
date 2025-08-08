@@ -1,7 +1,10 @@
-import Logo from "@/components/icons/logosignin";
 import Image from "next/image";
 import Link from "next/link";
+
+import Logo from "@/components/icons/logosignin";
+
 import LoginForm from "./LoginForm";
+
 
 export default function LoginPage() {
   return (

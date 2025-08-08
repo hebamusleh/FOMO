@@ -3,12 +3,22 @@ import type { CollectionConfig } from "payload";
 export const Students: CollectionConfig = {
   slug: "students",
   admin: {
-    useAsTitle: "userId",
+    useAsTitle: "userId",  
   },
   access: {
-    create: () => true,
+    create: ({ req: { user } }) => !!user, 
+    read: ({ req: { user } }) => {
+      if (!user) return false;
+      if (user.role === "admin") return true;
+      return { userId: user.id };    
+    },
+    update: ({ req: { user } }) => {
+      if (!user) return false;
+      if (user.role === "admin") return true;
+      return { userId: user.id };
+    },
+    delete: ({ req: { user } }) => user?.role === "admin",
   },
-  auth: true,
   fields: [
     {
       name: "userId",
@@ -16,16 +26,7 @@ export const Students: CollectionConfig = {
       relationTo: "users",
       required: true,
       unique: true,
-    },
-    {
-      name: "firstName",
-      type: "text",
-      required: true,
-    },
-    {
-      name: "lastName",
-      type: "text",
-      required: true,
+      filterOptions: { role: { equals: "student" } }, // يجيب بس  بـ role=student
     },
     {
       name: "goal",
@@ -51,11 +52,6 @@ export const Students: CollectionConfig = {
       name: "pronoun",
       type: "text",
       required: true,
-    },
-    {
-      name: "profilePhoto",
-      type: "upload",
-      relationTo: "media",
     },
     {
       name: "urlLinkedin",
