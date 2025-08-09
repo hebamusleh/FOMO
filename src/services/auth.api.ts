@@ -10,6 +10,7 @@ type Result = {
 };
 
 export const SignUpAPI = async (body: any) => {
+  console.log("body", body);
   const payload = await getPayload({ config });
   try {
     const user = await payload.create({
@@ -19,14 +20,13 @@ export const SignUpAPI = async (body: any) => {
         password: body.password,
         firstName: body.firstName,
         lastName: body.lastName,
-        role: body.role,
-        profilePhoto: body.avatar,
+        roles: body.role,
       },
     });
 
     if (body.role === "student") {
       await payload.create({
-        collection: "students",
+        collection: "students" as any,
         data: {
           userId: user.id,
           firstName: body.firstName,
@@ -43,7 +43,7 @@ export const SignUpAPI = async (body: any) => {
       });
     } else if (body.role === "mentor") {
       await payload.create({
-        collection: "mentors",
+        collection: "mentors" as any,
         data: {
           userId: user.id,
           firstName: body.firstName,

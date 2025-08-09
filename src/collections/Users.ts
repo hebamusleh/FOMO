@@ -8,7 +8,7 @@ export const Users: CollectionConfig = {
   fields: [
     {
       name: "email",
-      type: "email",
+      type: "text",
       required: true,
       unique: true,
     },
@@ -28,14 +28,14 @@ export const Users: CollectionConfig = {
       required: true,
     },
     {
-      name: "profilePhoto",
-      type: "upload",
-      relationTo: "media",
-    },
-    {
-      name: "role",
-      type: "text",
+      name: "roles",
+      type: "select",
       required: true,
+      options: [
+        { label: "Student", value: "student" },
+        { label: "Mentor", value: "mentor" },
+        { label: "Admin", value: "admin" },
+      ],
     },
   ],
 };

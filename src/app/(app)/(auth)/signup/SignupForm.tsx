@@ -137,9 +137,9 @@ export default function SignupForm() {
         goals: data.goals,
         bio: data.bio,
         linkedin: data.linkedin!,
-        // job: data.job!,
-        // track: data.track!,
-        // skills: data.skills!,
+        // job: data.job || "",
+        // track: data.track || "",
+        // skills: data.skills || [],
         // message: data.message!,
         // yearOfExperience: data.yearOfExperience ? data.yearOfExperience : undefined,
       });
