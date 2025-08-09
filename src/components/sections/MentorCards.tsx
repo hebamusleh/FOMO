@@ -15,7 +15,7 @@ interface Mentor {
 
 const mentors: Mentor[] = [
   {
-    imageSrc: '/assets/images/mentor1.svg',
+    imageSrc: '/assets/images/avatar3.svg',
     name: 'Ethan Cole',
     role: 'Senior UX/UI Designer',
     years: 5,
@@ -23,7 +23,7 @@ const mentors: Mentor[] = [
     reviews: 29,
   },
   {
-    imageSrc: '/assets/images/mentor1.svg',
+    imageSrc: '/assets/images/avatar3.svg',
     name: 'Ava Mitchell',
     role: 'Product Designer',
     years: 7,
@@ -31,7 +31,7 @@ const mentors: Mentor[] = [
     reviews: 42,
   },
   {
-    imageSrc: '/assets/images/mentor1.svg',
+    imageSrc: '/assets/images/avatar3.svg',
     name: 'Liam Johnson',
     role: 'Visual Designer',
     years: 4,
@@ -39,7 +39,7 @@ const mentors: Mentor[] = [
     reviews: 18,
   },
   {
-    imageSrc: '/assets/images/mentor1.svg',
+    imageSrc: '/assets/images/avatar3.svg',
     name: 'Sophia Lee',
     role: 'UX Researcher',
     years: 6,

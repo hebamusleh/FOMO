@@ -40,7 +40,7 @@ export default function HeroSection() {
       {/* Image on the right */}
       <div className="hidden md:flex md:flex-shrink-0 md:w-1/5 lg:w-1/6">
         <Image
-          src="/assets/images/side-right.svg"
+          src="/assets/images/side-left.svg"
           alt="Side Right"
           width={220}
           height={220}
