@@ -2,6 +2,12 @@ import type { CollectionConfig } from "payload";
 
 export const Sections: CollectionConfig = {
   slug: "sections",
+  access: {
+    read: () => true,
+    create: () => true,
+    update: () => true,
+    delete: () => true,
+  },
   admin: {
     useAsTitle: "name",
   },
@@ -19,7 +25,7 @@ export const Sections: CollectionConfig = {
     {
       name: "coverImage",
       type: "upload",
-      relationTo: "media",
+      relationTo: "media" as any,
     },
     {
       name: "cardContent",
@@ -44,7 +50,7 @@ export const Sections: CollectionConfig = {
             {
               name: "image",
               type: "upload",
-              relationTo: "media",
+              relationTo: "media" as any,
             },
           ],
         },

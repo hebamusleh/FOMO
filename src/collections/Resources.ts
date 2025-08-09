@@ -9,7 +9,7 @@ export const Resources: CollectionConfig = {
     {
       name: 'mentorId',
       type: 'relationship',
-      relationTo: 'mentors',
+      relationTo: 'mentors' as any,
       required: true,
     },
     {

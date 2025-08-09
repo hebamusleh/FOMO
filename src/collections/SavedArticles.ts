@@ -8,7 +8,7 @@ export const SavedArticles: CollectionConfig = {
     {
       name: 'idStudent',
       type: 'relationship',
-      relationTo: 'students',
+      relationTo: 'students' as any,
       required: true,
     },
     {

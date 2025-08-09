@@ -9,13 +9,13 @@ export const Articles: CollectionConfig = {
     {
       name: 'mentorId',
       type: 'relationship',
-      relationTo: 'mentors',
+      relationTo: 'mentors' as any,
       required: true,
     },
     {
       name: 'trackId',
       type: 'relationship',
-      relationTo: 'tracks',
+      relationTo: 'tracks' as any,
       required: true,
     },
     {
@@ -30,7 +30,7 @@ export const Articles: CollectionConfig = {
     {
       name: 'image',
       type: 'upload',
-      relationTo: 'media',
+      relationTo: 'media' as any,
     },
     {
       name: 'status',
@@ -60,7 +60,7 @@ export const Articles: CollectionConfig = {
     {
       name: 'savedArticles',
       type: 'relationship',
-      relationTo: 'saved-articles',
+      relationTo: 'saved-articles' as any,
       hasMany: true,
     },
   ],

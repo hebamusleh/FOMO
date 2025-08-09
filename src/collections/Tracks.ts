@@ -2,6 +2,12 @@ import type { CollectionConfig } from "payload";
 
 export const Tracks: CollectionConfig = {
   slug: "tracks",
+   access: {
+    read: () => true,
+    create: () => true,
+    update: () => true,
+    delete: () => true,
+  },
   admin: {
     useAsTitle: "trackName",
   },
@@ -15,7 +21,7 @@ export const Tracks: CollectionConfig = {
     {
       name: "categoryId",
       type: "relationship",
-      relationTo: "track-categories",
+      relationTo: "track-categories" as any,
       required: true,
     },
     {
@@ -25,7 +31,7 @@ export const Tracks: CollectionConfig = {
     {
       name: "trackImage",
       type: "upload",
-      relationTo: "media",
+      relationTo: "media" as any,
     },
     {
       name: "roadmapLink",
@@ -38,7 +44,7 @@ export const Tracks: CollectionConfig = {
     {
       name: "favouriteTracks",
       type: "relationship",
-      relationTo: "favourite-tracks",
+      relationTo: "favourite-tracks" as any,
       hasMany: true,
     },
     {

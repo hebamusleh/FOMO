@@ -2,6 +2,12 @@ import type { CollectionConfig } from "payload";
 
 export const TracksCategory: CollectionConfig = {
   slug: 'track-categories',
+   access: {
+    read: () => true,
+    create: () => true,
+    update: () => true,
+    delete: () => true,
+  },
   admin: {
     useAsTitle: 'categoryName',
   },
@@ -15,7 +21,7 @@ export const TracksCategory: CollectionConfig = {
     {
       name: 'tracks',
       type: 'relationship',
-      relationTo: 'tracks',
+      relationTo: 'tracks' as any,
       hasMany: true,
     },
   ],

@@ -9,7 +9,7 @@ export const Notes: CollectionConfig = {
     {
       name: 'sectionID',
       type: 'relationship',
-      relationTo: 'sections',
+      relationTo: 'sections' as any,
       required: true,
     },
     {

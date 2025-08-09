@@ -5,11 +5,17 @@ export const Posts: CollectionConfig = {
   admin: {
     useAsTitle: 'post',
   },
+   access: {
+    read: () => true,
+    create: () => true,
+    update: () => true,
+    delete: () => true,
+  },
   fields: [
     {
       name: 'mentorId',
       type: 'relationship',
-      relationTo: 'mentors',
+      relationTo: 'mentors' as any,
       required: true,
     },
     {
@@ -39,7 +45,7 @@ export const Posts: CollectionConfig = {
     {
       name: 'savedPosts',
       type: 'relationship',
-      relationTo: 'saved-posts',
+      relationTo: 'saved-posts' as any,
       hasMany: true,
     },
   ],

@@ -9,7 +9,7 @@ export const Students: CollectionConfig = {
     create: ({ req: { user } }) => !!user,
     read: ({ req: { user } }) => {
       if (!user) return false;
-      if (user?.roles?.includes("Admin")) return true;
+      if (user?.roles?.includes("admin")) return true;
       return {
         userId: {
           equals: user.id!,
@@ -18,7 +18,7 @@ export const Students: CollectionConfig = {
     },
     update: ({ req: { user } }) => {
       if (!user) return false;
-      if (user?.roles?.includes("Admin")) return true;
+      if (user?.roles?.includes("admin")) return true;
       return { userId: { equals: user.id! } };
     },
   },
