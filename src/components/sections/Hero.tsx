@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
-export default function Hero() {
+export default function Hero({ isMentor }: { isMentor: boolean }) {
   return (
     <>
       <section className="-mt-16 bg-blue-50">
@@ -23,7 +23,11 @@ export default function Hero() {
           </div>
           <div className="flex-1">
             <Image
-              src="/assets/images/hero.png"
+              src={
+                isMentor
+                  ? "/assets/images/mentor-hero.svg"
+                  : "/assets/images/hero.png"
+              }
               alt="Hero"
               width={600}
               height={400}
