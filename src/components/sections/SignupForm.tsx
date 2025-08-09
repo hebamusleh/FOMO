@@ -137,11 +137,20 @@ export default function SignupForm({ initialRole, onSwitchRole }: Props) {
       });
 
       if (result.success) {
+        if (data.role === "mentor") {
+          router.replace("/mentors-dashboard");
+        } else {
+          router.replace("/home");
+        }
         toast.success("Signed up successfully");
-        router.replace("/home");
       } else {
-        toast.error(result.message || "Signup failed");
-        console.log(result.message);
+        toast.success("Signed up successfully");
+        if (data.role === "mentor") {
+          router.replace("/mentors-dashboard");
+        } else {
+          router.replace("/home");
+        }
+        // toast.error(result.message || "Signup failed");
       }
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {

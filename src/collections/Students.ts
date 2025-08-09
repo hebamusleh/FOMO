@@ -3,13 +3,13 @@ import type { CollectionConfig } from "payload";
 export const Students: CollectionConfig = {
   slug: "students",
   admin: {
-    useAsTitle: "userId",  
+    useAsTitle: "userId",
   },
   access: {
-    create: ({ req: { user } }) => !!user, 
+    create: ({ req: { user } }) => !!user,
     read: ({ req: { user } }) => {
       if (!user) return false;
-      if (user.role === "admin") return true;
+      if (user?.roles?.includes("Admin")) return true;
       return {
         userId: {
           equals: user.id!,
@@ -18,10 +18,9 @@ export const Students: CollectionConfig = {
     },
     update: ({ req: { user } }) => {
       if (!user) return false;
-      if (user.role === "admin") return true;
+      if (user?.roles?.includes("Admin")) return true;
       return { userId: { equals: user.id! } };
     },
-    delete: ({ req: { user } }) => user?.role === "admin",
   },
   fields: [
     {

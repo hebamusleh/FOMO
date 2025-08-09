@@ -10,7 +10,6 @@ type Result = {
 };
 
 export const SignUpAPI = async (body: any) => {
-  console.log("body", body);
   const payload = await getPayload({ config });
   try {
     const user = await payload.create({
@@ -23,6 +22,10 @@ export const SignUpAPI = async (body: any) => {
         roles: body.role,
       },
     });
+
+    console.log("User ID:", user.id);
+
+    if (!user.id) throw new Error("User ID not created");
 
     if (body.role === "student") {
       await payload.create({

@@ -6,14 +6,12 @@ export const Mentors: CollectionConfig = {
     useAsTitle: "userId",
   },
   access: {
-    create: ({ req: { user } }) => !!user && user.role === "mentor",
     read: () => true,
     update: ({ req: { user } }) => {
       if (!user) return false;
-      if (user.role === "admin") return true;
+      if (user?.roles?.includes("Admin")) return true;
       return { userId: { equals: user.id } };
     },
-    delete: ({ req: { user } }) => user?.role === "admin",
   },
   fields: [
     {
@@ -56,7 +54,7 @@ export const Mentors: CollectionConfig = {
     {
       name: "profilePhoto",
       type: "upload",
-      relationTo: "media",
+      relationTo: "media" as any,
     },
     {
       name: "urlLinkedin",
@@ -73,12 +71,12 @@ export const Mentors: CollectionConfig = {
     {
       name: "expertTrackId",
       type: "relationship",
-      relationTo: "tracks",
+      relationTo: "tracks" as any,
     },
     {
       name: "posts",
       type: "relationship",
-      relationTo: "posts",
+      relationTo: "posts" as any,
       hasMany: true,
     },
     {
