@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import LoginForm from "./LoginForm";
 
-export default function LoginPage() {
+export default async function LoginPage() {
   return (
     <div className="flex min-h-screen">
       <div className="hidden flex-1 items-center justify-center bg-blue-50 p-10 xl:flex">

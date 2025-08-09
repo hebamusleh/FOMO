@@ -12,9 +12,14 @@ import LockIcon from "@/components/icons/lock";
 import EmailIcon from "@/components/icons/sms";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, useWatch } from "react-hook-form";
+import { LoginAPI } from "./actions/login";
 
 export default function LoginForm() {
   const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const schema = yup.object({
     email: yup
       .string()
@@ -42,16 +47,29 @@ export default function LoginForm() {
   });
   const rememberValue = useWatch({ control, name: "remember" });
 
-  const [showPassword, setShowPassword] = useState(false);
-
-  const [loading, setLoading] = useState(false);
-
   const onSubmit = async (data: LoginFormData) => {
     console.log(data);
+    setLoading(true);
+    setError(null);
+    const result = await LoginAPI({
+      email: data.email,
+      password: data.password,
+    });
+    if (result.success) {
+      router.push("/home");
+    } else {
+      setError(result.errors || "Login failed");
+    }
+    setLoading(false);
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      {error && (
+        <p className="text-center text-sm font-semibold text-red-500">
+          {error}
+        </p>
+      )}
       <div className="relative">
         <EmailIcon className="absolute left-3 top-1/2 -translate-y-1/2 transform text-gray-400" />
         <input
