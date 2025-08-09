@@ -18,12 +18,12 @@ export default function Card({
   return (
     <Link href={linkHref} className="m-1 block max-w-sm">
       <UICard className="flex h-full flex-col overflow-hidden rounded-xl border-none bg-white p-2 shadow-sm transition-shadow duration-200 hover:shadow-md">
-        <div className="relative h-32 w-full">
+        <div className="relative h-32 w-full rounded-xl">
           <Image
             src={`${IMAGE_URL}${image}`}
             alt={title}
             fill
-            className="object-cover"
+            className="object-cover rounded-xl"
           />
         </div>
         <div className="flex flex-1 flex-col items-center justify-center p-4 text-center">
